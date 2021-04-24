@@ -26,7 +26,7 @@ FROM ubuntu:20.04
 WORKDIR /app
 
 # Copy from images
-COPY --from=mirakurun-build /usr/local/lib/node_modules/mirakurun /app
+COPY --from=mirakurun-build /usr/lib/node_modules/mirakurun /app
 COPY --from=libarib25-image /build /
 COPY --from=v4l-utils-image /build /
 
