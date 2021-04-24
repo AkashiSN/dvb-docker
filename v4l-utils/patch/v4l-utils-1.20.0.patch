@@ -1,3 +1,11 @@
+diff -uprN v4l-utils-1.20.0/configure.ac v4l-utils-1.20.0-new/configure.ac
+--- v4l-utils-1.20.0/configure.ac	2020-11-29 18:40:43.149443000 +0900
++++ v4l-utils-1.20.0-new/configure.ac	2020-11-29 18:38:57.249443000 +0900
+@@ -389,3 +389,3 @@
+ # Debian/Ubuntu-specific check: should be aligned with the debian package
+ AS_IF([test "x${def_gconv_dir}" = "x" ],
+-      def_gconv_dir=`for i in mips64el-linux-gnuabi64 mips64el-linux-gnuabin32 mips64-linux-gnuabi64 mips64-linux-gnuabin32 mipsisa64r6el-linux-gnuabi64 mipsisa64r6el-linux-gnuabin32 mipsisa64r6-linux-gnuabi64 mipsisa64r6-linux-gnuabin32 powerpc64-linux-gnu sparc64-linux-gnu x86_64-linux-gnu x86_64-linux-gnux32 alphaev67-linux-gnu arm-linux-gnueabi arm-linux-gnueabihf i686-kfreebsd-gnu i686-linux-gnu mipsel-linux-gnu mipsisa32r6el-linux-gnu mipsisa32r6-linux-gnu mips-linux-gnu powerpc-linux-gnu s390-linux-gnu sparcv9-linux-gnu; do if @<:@ -d /usr/lib/\$i/gconv @:>@; then echo /usr/lib/\$i/gconv; break; fi; done`)
++      def_gconv_dir=`for i in mips64el-linux-gnuabi64 mips64el-linux-gnuabin32 mips64-linux-gnuabi64 mips64-linux-gnuabin32 mipsisa64r6el-linux-gnuabi64 mipsisa64r6el-linux-gnuabin32 mipsisa64r6-linux-gnuabi64 mipsisa64r6-linux-gnuabin32 powerpc64-linux-gnu sparc64-linux-gnu x86_64-linux-gnu x86_64-linux-gnux32 alphaev67-linux-gnu arm-linux-gnueabi arm-linux-gnueabihf aarch64-linux-gnu i686-kfreebsd-gnu i686-linux-gnu mipsel-linux-gnu mipsisa32r6el-linux-gnu mipsisa32r6-linux-gnu mips-linux-gnu powerpc-linux-gnu s390-linux-gnu sparcv9-linux-gnu; do if @<:@ -d /usr/lib/\$i/gconv @:>@; then echo /usr/lib/\$i/gconv; break; fi; done`)
 diff -uprN v4l-utils-1.20.0/lib/libdvbv5/dvb-fe.c v4l-utils-1.20.0-new/lib/libdvbv5/dvb-fe.c
 --- v4l-utils-1.20.0/lib/libdvbv5/dvb-fe.c	2020-11-29 18:40:43.149443000 +0900
 +++ v4l-utils-1.20.0-new/lib/libdvbv5/dvb-fe.c	2020-11-29 18:38:57.249443000 +0900
