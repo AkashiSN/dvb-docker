@@ -1,8 +1,8 @@
-FROM akashisn/buildenv:ubuntu-20.04 AS arib25-build
+FROM buildpack-deps:buster AS arib25-build
 
 # Install dependency
 RUN apt-get update && \
-    apt-get install -y libpcsclite-dev
+    apt-get install -y cmake libpcsclite-dev
 
 # Download libarib25
 ADD https://github.com/stz2012/libarib25/archive/master.tar.gz /tmp/libarib25-master.tar.gz
@@ -19,11 +19,13 @@ COPY ./arib-b25-stream /usr/local/bin/
 RUN chmod 755 /usr/local/bin/arib-b25-stream
 
 # Copy artifacts
-RUN cp --archive --parents --no-dereference /usr/local/bin/ /build && \
+RUN mkdir /build && \
+    cp --archive --parents --no-dereference /usr/local/bin/ /build && \
     cp --archive --parents --no-dereference /usr/local/lib/ /build && \
-    cp --archive --parents --no-dereference /usr/local/include/ /build
+    cp --archive --parents --no-dereference /usr/local/include/ /build && \
+    rm -r /build/usr/local/lib/python*
 
 # final image
-FROM ubuntu:20.04
+FROM scratch
 
-COPY --from=arib25-build /build /build
+COPY --from=arib25-build /build /

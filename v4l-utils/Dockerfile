@@ -1,4 +1,4 @@
-FROM akashisn/buildenv:ubuntu-20.04 AS v4l-build
+FROM buildpack-deps:buster AS v4l-build
 
 # Install dependency
 RUN apt-get update && \
@@ -25,11 +25,13 @@ RUN cd /tmp/v4l-utils-1.20.0/contrib/gconv && \
     make install
 
 # Copy artifacts
-RUN cp --archive --parents --no-dereference /usr/local/bin/ /build && \
+RUN mkdir /build && \
+    cp --archive --parents --no-dereference /usr/local/bin/ /build && \
     cp --archive --parents --no-dereference /usr/local/lib/ /build && \
-    cp --archive --parents --no-dereference /usr/local/include/ /build
+    cp --archive --parents --no-dereference /usr/local/include/ /build && \
+    rm -r /build/usr/local/lib/python*
 
 # final image
-FROM ubuntu:20.04
+FROM scratch
 
-COPY --from=v4l-build /build /build
+COPY --from=v4l-build /build /
