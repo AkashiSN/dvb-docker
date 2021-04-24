@@ -1,5 +1,6 @@
 FROM akashisn/v4l-utils:ubuntu AS v4l-utils
 
+# final image
 FROM ubuntu:20.04
 
 ENV GCONV_PATH=/usr/local/lib/gconv
