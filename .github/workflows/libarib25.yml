@@ -35,7 +35,7 @@ jobs:
           context: ./libarib25
           file: ./libarib25/Dockerfile
           tags: |
-            akashisn/libarib25:ubuntu
+            akashisn/libarib25
           platforms: linux/amd64,linux/arm64/v8
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache

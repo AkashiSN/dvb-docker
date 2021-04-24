@@ -1,4 +1,4 @@
-FROM akashisn/v4l-utils:ubuntu AS v4l-utils
+FROM akashisn/v4l-utils AS v4l-utils
 
 # final image
 FROM ubuntu:20.04

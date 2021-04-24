@@ -14,9 +14,9 @@ RUN tar xf /tmp/libarib25-master.tar.gz -C /tmp/ && \
     make -j$(nproc) && \
     make install
 
-COPY ./arib-b25-stream /tmp/
-RUN chmod 755 /tmp/arib-b25-stream && \
-    mv /tmp/arib-b25-stream /usr/local/bin/
+# Copy wrapper script
+COPY ./arib-b25-stream /usr/local/bin/
+RUN chmod 755 /usr/local/bin/arib-b25-stream
 
 # Copy artifacts
 RUN cp --archive --parents --no-dereference /usr/local/bin/ /build && \

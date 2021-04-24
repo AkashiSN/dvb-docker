@@ -1,4 +1,4 @@
-name: v4l-utils
+name: mirakurun
 
 on: [ workflow_dispatch ]
 
@@ -29,25 +29,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push - v4l-utils
+      - name: Build and push - mirakurun
         uses: docker/build-push-action@v2
         with:
-          context: ./v4l-utils
-          file: ./v4l-utils/Dockerfile
+          context: ./mirakurun
+          file: ./mirakurun/Dockerfile
           tags: |
-            akashisn/v4l-utils
-          platforms: linux/amd64,linux/arm64/v8
-          push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-
-      - name: Build and push - dvb-scan
-        uses: docker/build-push-action@v2
-        with:
-          context: ./v4l-utils/dvb-scan
-          file: ./v4l-utils/dvb-scan/Dockerfile
-          tags: |
-            akashisn/dvb-scan
+            akashisn/mirakurun
           platforms: linux/amd64,linux/arm64/v8
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
