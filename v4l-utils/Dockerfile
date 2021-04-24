@@ -1,8 +1,10 @@
 FROM buildpack-deps:buster AS v4l-build
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install dependency
 RUN apt-get update && \
-    apt-get install -y gettext autopoint udev libudev-dev systemd libjpeg-dev libelf-dev
+    apt-get install -y gettext autopoint udev libudev-dev systemd libelf-dev
 
 # Download v4l-utils
 ADD https://linuxtv.org/downloads/v4l-utils/v4l-utils-1.20.0.tar.bz2 /tmp/

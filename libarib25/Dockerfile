@@ -1,5 +1,7 @@
 FROM buildpack-deps:buster AS arib25-build
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install dependency
 RUN apt-get update && \
     apt-get install -y cmake libpcsclite-dev
