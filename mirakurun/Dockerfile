@@ -1,5 +1,5 @@
 # Mirakurun image
-FROM chinachu/mirakurun as mirakurun-image
+FROM chinachu/mirakurun AS mirakurun-image
 
 
 # libarib25 image

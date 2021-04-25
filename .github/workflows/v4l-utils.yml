@@ -1,6 +1,9 @@
 name: v4l-utils
 
-on: [ workflow_dispatch ]
+on:
+  push:
+    paths:
+      - 'v4l-utils/**'
 
 jobs:
   buildx:

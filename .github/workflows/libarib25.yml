@@ -1,6 +1,9 @@
 name: libarib25
 
-on: [ workflow_dispatch ]
+on:
+  push:
+    paths:
+      - 'libarib25/**'
 
 jobs:
   buildx:
