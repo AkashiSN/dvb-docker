@@ -1,10 +1,11 @@
+ARG FFMPEG_TYPE
+
 # epgstaion
 FROM l3tnun/epgstation AS epgstation-image
 
 
-# ffmpeg-qsv image
-ARG FFMPEG_TYPE=qsv
-FROM akashisn/ffmpeg:${FFMPEG_TYPE} AS ffmpeg-qsv-image
+# ffmpeg image
+FROM akashisn/ffmpeg:${FFMPEG_TYPE:-qsv} AS ffmpeg-image
 
 # Copy artifacts
 RUN mkdir /build && \
@@ -20,7 +21,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Copy from images
 COPY --from=epgstation-image /app /app
-COPY --from=ffmpeg-qsv-image /build /
+COPY --from=ffmpeg-image /build /
 
 # Install library
 RUN apt-get update && \
