@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'mirakurun/**'
+      - '!mirakurun/**.md'
 
 jobs:
   buildx:

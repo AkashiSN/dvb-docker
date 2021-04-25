@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'epgstation/**'
+      - '!epgstation/**.md'
 
 jobs:
   buildx:

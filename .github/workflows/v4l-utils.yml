@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'v4l-utils/**'
+      - '!v4l-utils/**.md'
 
 jobs:
   buildx:

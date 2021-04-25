@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'libarib25/**'
+      - '!libarib25/**.md'
 
 jobs:
   buildx:
