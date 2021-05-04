@@ -10,5 +10,8 @@ COPY --from=v4l-utils-image / /
 COPY ./isdb-initial /workdir/isdb-init
 COPY ./scan.sh /workdir/scan.sh
 
+# ldconfig
+RUN ldconfig
+
 WORKDIR /workdir
 ENTRYPOINT [ "/bin/sh", "/workdir/scan.sh" ]

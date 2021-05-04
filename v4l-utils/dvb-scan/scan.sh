@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 dvbv5-scan -C JP -a 1 -o /workdir/tuners/isdbt.conf /workdir/isdb-initial/jp-ISDBT-ALL
 dvbv5-scan -C JP -a 0 -N -T 5 -o /workdir/tuners/isdbs-bs.conf /workdir/isdb-initial/jp-ISDBS-BS

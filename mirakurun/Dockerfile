@@ -16,6 +16,13 @@ FROM node:14-buster
 ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /app
 
+# Install library
+RUN apt-get update && \
+    apt-get install -y pcscd pcsc-tools libccid libpcsclite1 && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+
 # Copy from images
 COPY --from=mirakurun-image /app /app
 COPY --from=libarib25-image / /
@@ -25,12 +32,8 @@ COPY --from=v4l-utils-image / /
 COPY ./container-init.sh /usr/local/bin/
 RUN chmod 755 /usr/local/bin/container-init.sh
 
-# Install library
-RUN apt-get update && \
-    apt-get install -y pcscd pcsc-tools libccid libpcsclite1 && \
-    apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+# ldconfig
+RUN ldconfig
 
 EXPOSE 40772 9229
 ENTRYPOINT ["/usr/local/bin/container-init.sh"]
