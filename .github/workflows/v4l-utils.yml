@@ -5,6 +5,7 @@ on:
     paths:
       - 'v4l-utils/**'
       - '!v4l-utils/**.md'
+  workflow_dispatch:
 
 jobs:
   buildx:

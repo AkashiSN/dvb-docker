@@ -5,6 +5,7 @@ on:
     paths:
       - 'libarib25/**'
       - '!libarib25/**.md'
+  workflow_dispatch:
 
 jobs:
   buildx:

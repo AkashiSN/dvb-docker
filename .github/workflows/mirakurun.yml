@@ -5,6 +5,7 @@ on:
     paths:
       - 'mirakurun/**'
       - '!mirakurun/**.md'
+  workflow_dispatch:
 
 jobs:
   buildx:
