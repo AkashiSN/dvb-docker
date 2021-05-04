@@ -11,4 +11,4 @@ COPY ./isdb-initial /workdir/isdb-init
 COPY ./scan.sh /workdir/scan.sh
 
 WORKDIR /workdir
-ENTRYPOINT [ "/bin/sh" "/workdir/scan.sh" ]
+ENTRYPOINT [ "/bin/sh", "/workdir/scan.sh" ]
