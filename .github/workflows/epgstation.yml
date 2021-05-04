@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push - epgstation
+      - name: Build and push - epgstation-qsv
         uses: docker/build-push-action@v2
         with:
           context: ./epgstation
@@ -43,6 +43,20 @@ jobs:
             FFMPEG_TYPE=qsv
           tags: |
             akashisn/epgstation:qsv
+          platforms: linux/amd64
+          push: true
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Build and push - epgstation
+        uses: docker/build-push-action@v2
+        with:
+          context: ./epgstation
+          file: ./epgstation/Dockerfile
+          build-args: |
+            FFMPEG_TYPE=latest
+          tags: |
+            akashisn/epgstation
           platforms: linux/amd64
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache

@@ -5,7 +5,7 @@ FROM l3tnun/epgstation AS epgstation-image
 
 
 # ffmpeg image
-FROM akashisn/ffmpeg:${FFMPEG_TYPE:-qsv} AS ffmpeg-image
+FROM akashisn/ffmpeg:${FFMPEG_TYPE} AS ffmpeg-image
 
 # Copy artifacts
 RUN mkdir /build && \
