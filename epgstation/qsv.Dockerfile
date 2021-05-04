@@ -23,7 +23,7 @@ COPY --from=ffmpeg-image /build /
 
 # Install library
 RUN apt-get update && \
-    apt-get install -y libdrm2 libx11-6 libxext6 libxfixes3 gettext && \
+    apt-get install -y libdrm2 libx11-6 libxext6 libxfixes3 gettext sudo && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
