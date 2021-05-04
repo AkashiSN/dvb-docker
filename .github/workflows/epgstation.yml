@@ -38,9 +38,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./epgstation
-          file: ./epgstation/Dockerfile
-          build-args: |
-            FFMPEG_TYPE=qsv
+          file: ./epgstation/qsv.Dockerfile
           tags: |
             akashisn/epgstation:qsv
           platforms: linux/amd64
@@ -53,8 +51,6 @@ jobs:
         with:
           context: ./epgstation
           file: ./epgstation/Dockerfile
-          build-args: |
-            FFMPEG_TYPE=latest
           tags: |
             akashisn/epgstation
           platforms: linux/amd64
