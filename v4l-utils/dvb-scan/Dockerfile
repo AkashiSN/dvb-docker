@@ -7,7 +7,7 @@ FROM debian:buster
 ENV GCONV_PATH=/usr/local/lib/gconv
 
 COPY --from=v4l-utils-image / /
-COPY ./isdb-initial /workdir/isdb-init
+COPY ./isdb-init /workdir/isdb-init
 COPY ./scan.sh /workdir/scan.sh
 
 # ldconfig
