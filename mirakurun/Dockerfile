@@ -14,6 +14,7 @@ FROM akashisn/v4l-utils AS v4l-utils-image
 FROM node:14-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV GCONV_PATH=/usr/local/lib/gconv
 WORKDIR /app
 
 # Install library
