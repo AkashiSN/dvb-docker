@@ -9,9 +9,10 @@ ENV GCONV_PATH=/usr/local/lib/gconv
 COPY --from=v4l-utils-image / /
 COPY ./isdb-init /workdir/isdb-init
 COPY ./scan.sh /workdir/scan.sh
+COPY ./genConf.py /workdir/genConf.py
 
-# ldconfig
-RUN ldconfig
+RUN apt-get update && \
+    apt-get install -y python3 python3-yaml
 
 WORKDIR /workdir
 ENTRYPOINT [ "/bin/sh", "/workdir/scan.sh" ]
