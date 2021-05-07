@@ -3,7 +3,8 @@ FROM l3tnun/epgstation AS epgstation-image
 
 
 # ffmpeg image
-FROM akashisn/ffmpeg:qsv AS ffmpeg-image
+ARG FFMPEG_VERSION=4.4
+FROM akashisn/ffmpeg:${FFMPEG_VERSION}-qsv AS ffmpeg-image
 
 # Copy artifacts
 RUN mkdir /build && \

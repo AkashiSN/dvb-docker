@@ -10,6 +10,9 @@ on:
 jobs:
   buildx:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ffmpeg: [4.3.2, 4.4]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -34,25 +37,29 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push - epgstation-qsv
-        uses: docker/build-push-action@v2
-        with:
-          context: ./epgstation
-          file: ./epgstation/qsv.Dockerfile
-          tags: |
-            akashisn/epgstation:qsv
-          platforms: linux/amd64
-          push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-
       - name: Build and push - epgstation
         uses: docker/build-push-action@v2
         with:
           context: ./epgstation
           file: ./epgstation/Dockerfile
           tags: |
-            akashisn/epgstation
+            akashisn/epgstation:${{ matrix.ffmpeg }}
+          build-args: |
+            FFMPEG_VERSION=${{ matrix.ffmpeg }}
+          platforms: linux/amd64
+          push: true
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Build and push - epgstation-qsv
+        uses: docker/build-push-action@v2
+        with:
+          context: ./epgstation
+          file: ./epgstation/qsv.Dockerfile
+          tags: |
+            akashisn/epgstation:${{ matrix.ffmpeg }}-qsv
+          build-args: |
+            FFMPEG_VERSION=${{ matrix.ffmpeg }}
           platforms: linux/amd64
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
