@@ -1,9 +1,10 @@
+ARG FFMPEG_VERSION=4.4
+
 # epgstaion
 FROM l3tnun/epgstation AS epgstation-image
 
 
 # ffmpeg image
-ARG FFMPEG_VERSION=4.4
 FROM akashisn/ffmpeg:${FFMPEG_VERSION} AS ffmpeg-image
 
 # Copy artifacts
