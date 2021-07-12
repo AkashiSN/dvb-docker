@@ -5,6 +5,7 @@ on:
     paths:
       - 'v4l-utils/dvb-scan/**'
       - '!v4l-utils/dvb-scan/**.md'
+      - '.github/workflows/dvb-scan.yml'
   workflow_run:
     workflows: ["v4l-utils"]
     branches: [main]
@@ -30,9 +31,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-${{ github.workflow }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-${{ github.workflow }}-
 
       - name: Login to DockerHub
         uses: docker/login-action@v1

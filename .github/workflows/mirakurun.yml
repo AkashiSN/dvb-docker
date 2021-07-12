@@ -5,6 +5,7 @@ on:
     paths:
       - 'mirakurun/**'
       - '!mirakurun/**.md'
+      - '.github/workflows/mirakurun.yml'
   workflow_run:
     workflows: ["v4l-utils", "libarib25"]
     branches: [main]
@@ -30,9 +31,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-${{ github.workflow }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-${{ github.workflow }}-
 
       - name: Login to DockerHub
         uses: docker/login-action@v1

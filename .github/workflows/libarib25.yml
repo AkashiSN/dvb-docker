@@ -5,6 +5,7 @@ on:
     paths:
       - 'libarib25/**'
       - '!libarib25/**.md'
+      - '.github/workflows/libarib25.yml'
   workflow_dispatch:
 
 jobs:
@@ -24,9 +25,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-${{ github.workflow }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-${{ github.workflow }}-
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
