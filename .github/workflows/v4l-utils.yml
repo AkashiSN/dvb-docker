@@ -31,8 +31,9 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: akashisn
+          password: ${{ github.token }}
 
       - name: Build and push - v4l-utils
         uses: docker/build-push-action@v2
@@ -40,19 +41,7 @@ jobs:
           context: ./v4l-utils
           file: ./v4l-utils/Dockerfile
           tags: |
-            akashisn/v4l-utils
-          platforms: linux/amd64,linux/arm64/v8
-          push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-
-      - name: Build and push - dvb-scan
-        uses: docker/build-push-action@v2
-        with:
-          context: ./v4l-utils/dvb-scan
-          file: ./v4l-utils/dvb-scan/Dockerfile
-          tags: |
-            akashisn/dvb-scan
+            ghcr.io/akashisn/dvb-docker/v4l-utils
           platforms: linux/amd64,linux/arm64/v8
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache

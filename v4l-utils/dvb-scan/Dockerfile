@@ -1,5 +1,5 @@
 # v4l-utils image
-FROM akashisn/v4l-utils AS v4l-utils-image
+FROM ghcr.io/akashisn/dvb-docker/v4l-utils AS v4l-utils-image
 
 # final image
 FROM debian:buster

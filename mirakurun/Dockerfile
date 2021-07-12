@@ -3,11 +3,11 @@ FROM chinachu/mirakurun AS mirakurun-image
 
 
 # libarib25 image
-FROM akashisn/libarib25 AS libarib25-image
+FROM ghcr.io/akashisn/dvb-docker/libarib25 AS libarib25-image
 
 
 # v4l-utils image
-FROM akashisn/v4l-utils AS v4l-utils-image
+FROM ghcr.io/akashisn/dvb-docker/v4l-utils AS v4l-utils-image
 
 
 # final image

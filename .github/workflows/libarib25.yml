@@ -31,8 +31,9 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: akashisn
+          password: ${{ github.token }}
 
       - name: Build and push - libarib25
         uses: docker/build-push-action@v2
@@ -40,7 +41,7 @@ jobs:
           context: ./libarib25
           file: ./libarib25/Dockerfile
           tags: |
-            akashisn/libarib25
+            ghcr.io/akashisn/dvb-docker/libarib25
           platforms: linux/amd64,linux/arm64/v8
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache

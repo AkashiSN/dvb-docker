@@ -1,18 +1,21 @@
-name: epgstation
+name: dvb-scan
 
 on:
   push:
     paths:
-      - 'epgstation/**'
-      - '!epgstation/**.md'
+      - 'v4l-utils/dvb-scan/**'
+      - '!v4l-utils/dvb-scan/**.md'
+  workflow_run:
+    workflows: ["v4l-utils"]
+    branches: [main]
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
   buildx:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ffmpeg: [4.3.2, 4.4]
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -37,30 +40,14 @@ jobs:
           username: akashisn
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push - epgstation
+      - name: Build and push - dvb-scan
         uses: docker/build-push-action@v2
         with:
-          context: ./epgstation
-          file: ./epgstation/Dockerfile
+          context: ./v4l-utils/dvb-scan
+          file: ./v4l-utils/dvb-scan/Dockerfile
           tags: |
-            akashisn/epgstation:${{ matrix.ffmpeg }}
-          build-args: |
-            FFMPEG_VERSION=${{ matrix.ffmpeg }}
-          platforms: linux/amd64
-          push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-
-      - name: Build and push - epgstation-qsv
-        uses: docker/build-push-action@v2
-        with:
-          context: ./epgstation
-          file: ./epgstation/qsv.Dockerfile
-          tags: |
-            akashisn/epgstation:${{ matrix.ffmpeg }}-qsv
-          build-args: |
-            FFMPEG_VERSION=${{ matrix.ffmpeg }}
-          platforms: linux/amd64
+            akashisn/dvb-scan
+          platforms: linux/amd64,linux/arm64/v8
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
