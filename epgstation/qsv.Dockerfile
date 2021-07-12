@@ -30,6 +30,9 @@ RUN apt-get update && \
 COPY --from=epgstation-image /app /app
 COPY --from=ffmpeg-image /build /
 
+ENV LIBVA_DRIVERS_PATH=/usr/local/lib \
+    LIBVA_DRIVER_NAME=iHD
+
 # ldconfig
 RUN ldconfig
 
