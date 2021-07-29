@@ -65,5 +65,5 @@ jobs:
             FFMPEG_VERSION=${{ matrix.ffmpeg }}
           platforms: linux/amd64
           push: true
-          cache-from: type=local,src=/tmp/.buildx-cache-qsv
-          cache-to: type=local,dest=/tmp/.buildx-cache-qsv
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
