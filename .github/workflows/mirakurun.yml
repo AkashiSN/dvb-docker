@@ -11,12 +11,11 @@ on:
     branches: [main]
     types:
       - completed
-  workflow_dispatch:
 
 jobs:
   buildx:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,11 +34,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ github.workflow }}-
 
-      - name: Login to DockerHub
+      - name: Login to GHCR
         uses: docker/login-action@v1
         with:
+          registry: ghcr.io
           username: akashisn
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: ${{ github.token }}
 
       - name: Build and push - mirakurun
         uses: docker/build-push-action@v2
@@ -47,7 +47,7 @@ jobs:
           context: ./mirakurun
           file: ./mirakurun/Dockerfile
           tags: |
-            akashisn/mirakurun
+            ghcr.io/akashisn/dvb-docker/mirakurun
           platforms: linux/amd64,linux/arm64/v8
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache

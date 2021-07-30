@@ -1,5 +1,7 @@
+ARG MIRAKURUN_VERSION=3.7.0
+
 # Mirakurun image
-FROM chinachu/mirakurun AS mirakurun-image
+FROM chinachu/mirakurun:${MIRAKURUN_VERSION} AS mirakurun-image
 
 
 # libarib25 image
