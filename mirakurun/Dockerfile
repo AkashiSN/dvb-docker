@@ -1,4 +1,4 @@
-ARG MIRAKURUN_VERSION=3.7.0
+ARG MIRAKURUN_VERSION=3.7.1
 
 # Mirakurun image
 FROM chinachu/mirakurun:${MIRAKURUN_VERSION} AS mirakurun-image
@@ -13,7 +13,7 @@ FROM ghcr.io/akashisn/dvb-docker/v4l-utils AS v4l-utils-image
 
 
 # final image
-FROM node:14-buster
+FROM node:16.6.1-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV GCONV_PATH=/usr/local/lib/gconv
