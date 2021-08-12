@@ -1,4 +1,4 @@
-ARG MIRAKURUN_VERSION=3.7.1
+ARG MIRAKURUN_VERSION=3.8.0
 
 # Mirakurun image
 FROM chinachu/mirakurun:${MIRAKURUN_VERSION} AS mirakurun-image
