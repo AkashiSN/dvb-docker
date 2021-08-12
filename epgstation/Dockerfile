@@ -1,5 +1,5 @@
 ARG FFMPEG_VERSION=4.4
-ARG EPGSTATION_VERSION=2.6.0
+ARG EPGSTATION_VERSION=2.6.7
 
 # epgstaion
 FROM l3tnun/epgstation:v${EPGSTATION_VERSION}-debian AS epgstation-image
@@ -14,7 +14,7 @@ RUN mkdir /build && \
 
 
 # final image
-FROM node:14-buster
+FROM node:16-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 
