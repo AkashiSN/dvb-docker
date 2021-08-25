@@ -1,5 +1,5 @@
 ARG FFMPEG_VERSION=4.4
-ARG EPGSTATION_VERSION=2.6.10
+ARG EPGSTATION_VERSION=2.6.11
 
 # epgstaion
 FROM l3tnun/epgstation:v${EPGSTATION_VERSION}-debian AS epgstation-image
