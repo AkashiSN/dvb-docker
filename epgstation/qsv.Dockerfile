@@ -22,7 +22,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install library
 RUN apt-get update && \
-    apt-get install -y curl libdrm2 libx11-6 libxext6 libxfixes3 gettext && \
+    apt-get install -y curl libdrm2 libxext6 libxfixes3 gettext && \
     curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs && \
     apt-get autoremove -y && \
