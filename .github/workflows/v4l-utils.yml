@@ -8,7 +8,7 @@ on:
       - '.github/workflows/v4l-utils.yml'
 
 jobs:
-  buildx:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
