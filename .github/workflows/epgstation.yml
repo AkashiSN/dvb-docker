@@ -6,17 +6,20 @@ on:
       - 'epgstation/**'
       - '!epgstation/**.md'
       - '.github/workflows/epgstation.yml'
-  workflow_dispatch:
 
 jobs:
-  buildx:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         ffmpeg: [4.3.2, 4.4]
+        hwaccel: [none, qsv]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -26,9 +29,9 @@ jobs:
         with:
           path: |
             /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ github.workflow }}-${{ matrix.ffmpeg }}-${{ github.sha }}
+          key: ${{ runner.os }}-${{ github.workflow }}-${{ matrix.ffmpeg }}-${{ matrix.hwaccel }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-${{ github.workflow }}-${{ matrix.ffmpeg }}-
+            ${{ runner.os }}-${{ github.workflow }}-${{ matrix.ffmpeg }}-${{ matrix.hwaccel }}-
 
       - name: Login to GHCR
         uses: docker/login-action@v1
@@ -37,30 +40,35 @@ jobs:
           username: akashisn
           password: ${{ github.token }}
 
+      - name: Set build target (none)
+        if: matrix.hwaccel == 'none'
+        run: |
+          echo "build_file=Dockerfile" >> $GITHUB_ENV
+          echo "build_tag=" >> $GITHUB_ENV
+          echo "build_platforms=linux/amd64,linux/arm64/v8" >> $GITHUB_ENV
+
+      - name: Set build target (qsv)
+        if: matrix.hwaccel == 'qsv'
+        run: |
+          echo "build_file=qsv.Dockerfile" >> $GITHUB_ENV
+          echo "build_tag=-qsv" >> $GITHUB_ENV
+          echo "build_platforms=linux/amd64" >> $GITHUB_ENV
+
       - name: Build and push - epgstation
         uses: docker/build-push-action@v2
         with:
           context: ./epgstation
-          file: ./epgstation/Dockerfile
+          file: ./epgstation/${{ env.build_file }}
           tags: |
-            ghcr.io/akashisn/dvb-docker/epgstation:${{ matrix.ffmpeg }}
+            ghcr.io/akashisn/dvb-docker/epgstation:${{ matrix.ffmpeg }}${{ env.build_tag }}
           build-args: |
             FFMPEG_VERSION=${{ matrix.ffmpeg }}
-          platforms: linux/amd64
+          platforms: ${{ env.build_platforms }}
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
-      - name: Build and push - epgstation-qsv
-        uses: docker/build-push-action@v2
-        with:
-          context: ./epgstation
-          file: ./epgstation/qsv.Dockerfile
-          tags: |
-            ghcr.io/akashisn/dvb-docker/epgstation:${{ matrix.ffmpeg }}-qsv
-          build-args: |
-            FFMPEG_VERSION=${{ matrix.ffmpeg }}
-          platforms: linux/amd64
-          push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+      - name: Move cache # https://github.com/docker/build-push-action/issues/252
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache

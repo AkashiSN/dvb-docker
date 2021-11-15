@@ -1,7 +1,7 @@
 ARG FFMPEG_VERSION=4.4
 ARG EPGSTATION_VERSION=2.6.15
 
-# epgstaion
+# epgstation
 FROM l3tnun/epgstation:v${EPGSTATION_VERSION}-debian AS epgstation-image
 
 
@@ -11,18 +11,17 @@ FROM akashisn/ffmpeg:${FFMPEG_VERSION}-qsv AS ffmpeg-image
 # Copy artifacts
 RUN mkdir /build && \
     cp --archive --parents --no-dereference /usr/local/bin/ff* /build && \
-    cp --archive --parents --no-dereference /usr/local/bin/vainfo /build && \
     cp --archive --parents --no-dereference /usr/local/lib/*.so* /build
 
 
 # final image
-FROM ubuntu:20.04
+FROM ubuntu:20.04 AS epgstation
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install library
 RUN apt-get update && \
-    apt-get install -y curl libdrm2 libxext6 libxfixes3 gettext && \
+    apt-get install -y curl libdrm2 gettext && \
     curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs && \
     apt-get autoremove -y && \

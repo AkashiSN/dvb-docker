@@ -1,7 +1,7 @@
 ARG FFMPEG_VERSION=4.4
 ARG EPGSTATION_VERSION=2.6.15
 
-# epgstaion
+# epgstation
 FROM l3tnun/epgstation:v${EPGSTATION_VERSION}-debian AS epgstation-image
 
 
@@ -14,7 +14,7 @@ RUN mkdir /build && \
 
 
 # final image
-FROM ubuntu:20.04
+FROM ubuntu:20.04 AS epgstation
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -30,9 +30,6 @@ RUN apt-get update && \
 # Copy from images
 COPY --from=epgstation-image /app /app
 COPY --from=ffmpeg-image /build /
-
-# ldconfig
-RUN ldconfig
 
 EXPOSE 8888
 WORKDIR /app
