@@ -20,7 +20,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install library
 RUN apt-get update && \
-    apt-get install -y curl gettext socat && \
+    apt-get install -y curl gettext && \
     curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs && \
     apt-get autoremove -y && \
